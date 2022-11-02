@@ -2,6 +2,7 @@ package entity
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 
 /**
@@ -9,32 +10,35 @@ import kotlin.test.assertEquals
  */
 class PlayerTest {
 
+    //Initialize the test cards
+    private val aceOfClubs = Card(CardSuit.CLUBS,CardValue.ACE,CardState.DRAW_STACK)
+    private val jackOfHearts = Card(CardSuit.HEARTS,CardValue.JACK,CardState.DRAW_STACK)
+    private val queenOfSpades = Card(CardSuit.SPADES,CardValue.QUEEN,CardState.DRAW_STACK)
+    private val kingOfDiamonds = Card(CardSuit.DIAMONDS,CardValue.KING,CardState.DRAW_STACK)
+    private val sevenOfDiamonds = Card(CardSuit.DIAMONDS,CardValue.SEVEN,CardState.DRAW_STACK)
+    private val eightOfHearts = Card(CardSuit.HEARTS,CardValue.EIGHT,CardState.DRAW_STACK)
+    //Initialize the test players
+    private val player1 = Player("Dieter", arrayOf(aceOfClubs,jackOfHearts,queenOfSpades))
+    private val player2 = Player("Sabrina", arrayOf(kingOfDiamonds,sevenOfDiamonds,eightOfHearts))
+
     /**
      * Tests the initialization of a player with valid information
      */
     @Test
-    fun createPlayerOneTest(){
-        //Initialize the test data
-        val name = "René"
-        val hasKnocked = false
-        val handArray = arrayOf(Card(CardSuit.CLUBS,CardValue.ACE,CardState.ON_PLAYER_HAND),
-                Card(CardSuit.CLUBS,CardValue.KING,CardState.ON_PLAYER_HAND),
-                Card(CardSuit.CLUBS,CardValue.QUEEN,CardState.ON_PLAYER_HAND))
-        val handArrayWithNull = null
-        //Initialize players
-        val player1 = Player(name,hasKnocked,handArray)
-        val player2 = Player(name,hasKnocked,handArrayWithNull)
-        //Test: Is name equal
-        assertEquals("René",player1.name)
-        assertEquals("René",player2.name)
-        //Test: Is value of hasKnocked equal
-        assertEquals(false,player1.hasKnocked)
-        assertEquals(false,player2.hasKnocked)
-        //Test: Is handArray equal
-        assertEquals(arrayOf(Card(CardSuit.CLUBS,CardValue.ACE,CardState.ON_PLAYER_HAND),
-            Card(CardSuit.CLUBS,CardValue.KING,CardState.ON_PLAYER_HAND),
-            Card(CardSuit.CLUBS,CardValue.QUEEN,CardState.ON_PLAYER_HAND)),player1.handArr)
-        assertEquals(null,player2.handArr)
+    fun createPlayerTest(){
+        assertEquals(player1,Player("Dieter", arrayOf(aceOfClubs,jackOfHearts,queenOfSpades)))
+        assertEquals(player2,Player("Sabrina", arrayOf(kingOfDiamonds,sevenOfDiamonds,eightOfHearts)))
+        assertNotEquals(player1,Player("Sabrina",arrayOf(aceOfClubs,jackOfHearts,queenOfSpades)))
+        assertNotEquals(player2,Player("Sabrina",arrayOf(aceOfClubs,jackOfHearts,queenOfSpades)))
     }
 
+    /**
+     * Tests the Get and Set method for hasKnocked
+     */
+    @Test
+    fun getAndSetTest(){
+        assertEquals(false,player1.hasKnocked)
+        player1.hasKnocked = true
+        assertNotEquals(false,player1.hasKnocked)
+    }
 }

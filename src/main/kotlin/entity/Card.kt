@@ -7,4 +7,10 @@ package entity
  * @param value represents the value of the card(2-10,JACK,QUEEN,KING,ACE)
  * @param state represents the state of the card(MIDDLE,DRAW_STACK,ON_PLAYER_HAND,OUT_OF_GAME)
  */
-data class Card(val color:CardSuit,val value: CardValue,val state:CardState)
+data class Card(val color:CardSuit,val value: CardValue,var state:CardState){
+
+    /**
+     * @return Returns every information of a Card: Color, Value and State
+     */
+    override fun toString() = "$color$value$state"
+}
