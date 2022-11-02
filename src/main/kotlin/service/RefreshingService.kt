@@ -1,4 +1,4 @@
 package service
 
-class RefreshingService {
+open abstract class RefreshingService {
 }

@@ -1,4 +1,4 @@
 package service
 
-class RankingService {
+class RankingService: RefreshingService() {
 }

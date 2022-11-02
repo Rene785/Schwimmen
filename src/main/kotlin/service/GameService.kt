@@ -1,4 +1,4 @@
 package service
 
-class GameService {
+class GameService : RefreshingService() {
 }
