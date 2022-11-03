@@ -1,4 +1,6 @@
 package service
 
-class RankingService: RefreshingService() {
+class RankingService(gs:GameService): RefreshingService() {
+    fun showResult(){}
+    private fun calculateResult(){}
 }
