@@ -1,9 +1,10 @@
 package service
 
-import javax.security.auth.Refreshable
+import view.Refreshables
 
-open abstract class RefreshingService {
-    fun onAllRefreshables(method:Refreshables){
+
+abstract class RefreshingService {
+    fun onAllRefreshables(method: Refreshables){
 
     }
 
