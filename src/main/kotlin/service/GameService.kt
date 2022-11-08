@@ -1,27 +1,27 @@
 package service
 
-import entity.Game
-import entity.Player
+import entity.*
 import java.util.LinkedList
 
 class GameService() : RefreshingService() {
 
 
-    val game = Game()
+    val game = Game(createDeck() as Array<Card>)
     val playerService = PlayerService(this)
     val rankingService = RankingService(this)
+
     fun beginGame(){
 
     }
+
     fun endGame(){
 
     }
     fun nextPlayer(){
-        var currPlayer = game.currentPlayer
-        if(currPlayer.hasNext()){
-            currPlayer.next()
+        if(game.currentPlayer.hasNext()){
+            game.currentPlayer.next()
         }else{
-            currPlayer = game.playerList.iterator()
+            game.currentPlayer = game.playerList.iterator()
         }
     }
     fun increasePassCounter(){
@@ -30,10 +30,34 @@ class GameService() : RefreshingService() {
     fun setPassCounterToZero(){
         game.passCounter = 0
     }
-    private fun handoutCards(){
 
+    /**
+     * Returns the first three cards of the draw Stack
+     */
+    fun handoutCards():LinkedList<Card>{
+        val handCards = LinkedList<Card>()
+        var i = 0
+        for(card in game.cardArr){
+            if(i == 2){
+                break
+            }
+            if(card.state == CardState.DRAW_STACK){
+                handCards.add(card)
+                i++
+            }
+        }
+        return handCards
     }
     private fun shuffleCards(){
-
+        game.cardArr.shuffle()
+    }
+    private fun createDeck():LinkedList<Card>{
+        val deck = LinkedList<Card>()
+        for(color in CardSuit.values()){
+            for(value in CardValue.values()){
+                deck.add(Card(color,value,CardState.DRAW_STACK))
+            }
+        }
+        return deck
     }
 }
