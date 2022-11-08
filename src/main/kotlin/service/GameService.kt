@@ -8,14 +8,16 @@ class GameService() : RefreshingService() {
 
     val game = Game(createDeck() as Array<Card>)
     val playerService = PlayerService(this)
-    val rankingService = RankingService(this)
-
     fun beginGame(){
-
+        createDeck()
+        shuffleCards()
+        for(player in game.playerList) handoutCards()
+        //onAllRefreshables(refreshAfterStart())
     }
 
     fun endGame(){
-
+        setPassCounterToZero()
+        showResult()
     }
     fun nextPlayer(){
         if(game.currentPlayer.hasNext()){
@@ -59,5 +61,11 @@ class GameService() : RefreshingService() {
             }
         }
         return deck
+    }
+    private fun showResult(){
+        for(player in game.playerList){
+            player.calculatePoints()
+        }
+        //onAllRefreshables(refreshScore())
     }
 }
