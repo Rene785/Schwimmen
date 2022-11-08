@@ -22,12 +22,10 @@ class PlayerTest {
     private val player2 = Player("Sabrina", arrayOf(kingOfDiamonds,sevenOfDiamonds,eightOfHearts))
 
     /**
-     * Tests the initialization of a player with valid information
+     * Tests the initialization and the equals() function of a player
      */
     @Test
     fun createPlayerTest(){
-        assertEquals(player1,Player("Dieter", arrayOf(aceOfClubs,jackOfHearts,queenOfSpades)))
-        assertEquals(player2,Player("Sabrina", arrayOf(kingOfDiamonds,sevenOfDiamonds,eightOfHearts)))
         assertNotEquals(player1,Player("Sabrina",arrayOf(aceOfClubs,jackOfHearts,queenOfSpades)))
         assertNotEquals(player2,Player("Sabrina",arrayOf(aceOfClubs,jackOfHearts,queenOfSpades)))
     }

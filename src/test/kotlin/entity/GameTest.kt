@@ -1,10 +1,7 @@
 package entity
 
 import org.junit.jupiter.api.Test
-import java.util.*
 import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
-
 /**
  * Test cases for [Game]
  */
@@ -54,18 +51,15 @@ class GameTest {
         sevenOfClubs,eightOfClubs,nineOfClubs,tenOfClubs,jackOfClubs,queenOfClubs,kingOfClubs,aceOfClubs)
     //Initialize players
     private val player1 = Player("Peter",arrayOf(deck[0],deck[1],deck[2]))
-    private val player2 = Player("Olivia", arrayOf(deck[29],deck[30],deck[31]))
-    private val player3 = Player("Klaus", arrayOf(deck[14],deck[15],deck[16]))
     //Initialize game
-    private val game = Game(listOf(player1,player2) as LinkedList<Player>,deck)
+    private val game = Game(deck)
 
     /**
      * Tests the initialization for a game
      */
     @Test
     fun createGameTest(){
-        assertEquals(game, Game(listOf(player1,player2) as LinkedList<Player>,deck))
-        assertNotEquals(game, Game(listOf(player2,player1) as LinkedList<Player>,deck))
+        assertEquals(game, Game(deck))
     }
 
     /**
@@ -73,8 +67,8 @@ class GameTest {
      */
     @Test
     fun getAndSetTest(){
-        assertEquals(Game(listOf(player1,player2) as LinkedList<Player>,deck),game)
-        game.playerList.add(player3)
-        assertEquals(Game(listOf(player1,player2,player3) as LinkedList<Player>, deck),game)
+        assertEquals(Game(deck),game)
+        game.playerList.add(player1)
+        assertEquals(Game(deck),game)
     }
 }
