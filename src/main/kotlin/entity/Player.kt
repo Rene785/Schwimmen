@@ -6,6 +6,13 @@ package entity
  * @param name Name of the player
  * @param handArr Array of all three hand cards of the player.
  */
-data class Player(val name:String, var handArr: Array<Card>){
+data class Player(var name:String, var handArr: Array<Card>){
     var hasKnocked = false
+    var points = 0
+
+    fun calculatePoints(){
+        for(card in handArr) {
+            points += Integer.parseInt(card.value.toString())
+        }
+    }
 }
