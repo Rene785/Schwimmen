@@ -5,8 +5,18 @@ import entity.CardState
 import entity.Player
 import java.util.*
 
+/**
+ * Service class [PlayerService] provides logic for all functionalities
+ * considering the player.
+ * @param gs GameService is the main service of the service package.
+ */
 class PlayerService(private val gs:GameService) : RefreshingService() {
 
+    /**
+     * Creates a player and adds it to the player list.
+     * @param name The name with which the player will be initialized
+     */
+    //TODO Randfälle implementieren für zwei Spieler und wenn über 4 Spieler geht.
     fun createPlayer(name:String){
         for(player in gs.game.playerList) {
             if (player.name.equals("Spieler 1") || player.name.equals("Spieler 2")){
@@ -14,26 +24,37 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
                 return
             }
         }
-        gs.game.playerList.add(Player(name,gs.handoutCards() as Array<Card>))
+        gs.game.playerList.add(Player(name,gs.handoutCards()))
         onAllRefreshables{
             refreshCreatePlayer()
         }
     }
+
+    /**
+     * Checks whether a player has knocked.
+     * @param player The player for who is checked whether he has knocked
+     * @return Boolean value: True, if player has knocked. False, if he has not.
+     */
     fun hasKnocked(player:Player):Boolean{
         return player.hasKnocked
     }
+
+    /**
+     * Changes all cards of the player with the cards in the middle
+     * @param player The player who changes his cards
+     */
     fun exchangeAllCards(player:Player) {
         val middleCards: LinkedList<Card> = LinkedList()
-        for (card in gs.game.cardArr) {
+        for (card in gs.game.cardList) {
             if (card.state == CardState.MIDDLE) {
                 middleCards.add(card)
             }
         }
-        for(card in player.handArr) card.state = CardState.MIDDLE
+        for(card in player.handCardList) card.state = CardState.MIDDLE
         for(card in middleCards) card.state = CardState.ON_PLAYER_HAND
-        player.handArr[0] = middleCards[0]
-        player.handArr[1] = middleCards[1]
-        player.handArr[2] = middleCards[2]
+        player.handCardList[0] = middleCards[0]
+        player.handCardList[1] = middleCards[1]
+        player.handCardList[2] = middleCards[2]
         gs.nextPlayer()
         gs.game.passCounter = 0
         onAllRefreshables{
@@ -41,15 +62,22 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
             refreshMiddleCards()
         }
     }
+
+    /**
+     * Changes one card of the player's hand with one card in the middle
+     * @param handCard The selected card of the player
+     * @param tableCard The selected card in the middle
+     * @param player The player who is changing his cards
+     */
     fun exchangeOneCard(handCard: Card,tableCard: Card,player: Player){
         var i=0
         var reached = false
-        for(card in player.handArr){
+        for(card in player.handCardList){
             if(reached) break
             else if(card == handCard){
-                player.handArr[i].state = CardState.MIDDLE
+                player.handCardList[i].state = CardState.MIDDLE
                 tableCard.state = CardState.ON_PLAYER_HAND
-                player.handArr[i] = tableCard
+                player.handCardList[i] = tableCard
                 reached = true
             }else{
                 i++
@@ -61,17 +89,23 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
             refreshMiddleCards()
         }
     }
+
+    /**
+     * Increases the pass counter and changes the cards in the middle if every participant
+     * has passed in their last round. Ends the game if not enough cards are left on the draw
+     * stack.
+     */
     fun pass(){
         gs.increasePassCounter()
         if(gs.game.passCounter == gs.game.playerList.size){
             gs.setPassCounterToZero()
             var count = 0
-            for(i in gs.game.cardArr.indices){
-                if(gs.game.cardArr[i].state == CardState.MIDDLE){
-                    gs.game.cardArr[i].state = CardState.OUT_OF_GAME
+            for(i in gs.game.cardList.indices){
+                if(gs.game.cardList[i].state == CardState.MIDDLE){
+                    gs.game.cardList[i].state = CardState.OUT_OF_GAME
                 }
             }
-            for(card in gs.game.cardArr){
+            for(card in gs.game.cardList){
                 if(count == 2) break
                 if(card.state == CardState.DRAW_STACK){
                     card.state = CardState.MIDDLE
@@ -88,6 +122,11 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
             refreshAfterPass()
         }
     }
+
+    /**
+     * If a player knocks the value is set true.
+     * @param player The player who knocks.
+     */
     fun knock(player: Player){
         player.hasKnocked = true
         onAllRefreshables {

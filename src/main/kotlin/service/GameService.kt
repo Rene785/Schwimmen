@@ -3,13 +3,20 @@ package service
 import entity.*
 import java.util.LinkedList
 
+/**
+ * Service Class [GameService] provides logic for all functionalities
+ * considering the flow of the game.
+ */
 class GameService() : RefreshingService() {
 
 
-    val game = Game(createDeck() as Array<Card>)
+    val game = Game(createDeck())
     val playerService = PlayerService(this)
+
+    /**
+     * Starts the game
+     */
     fun beginGame(){
-        createDeck()
         shuffleCards()
         for(player in game.playerList) handoutCards()
         onAllRefreshables{
@@ -17,20 +24,36 @@ class GameService() : RefreshingService() {
         }
     }
 
+    /**
+     * Starts the end Scene after the game has finished
+     */
     fun endGame(){
         setPassCounterToZero()
         showResult()
     }
+
+    /**
+     * Selects the next player in the player list
+     */
     fun nextPlayer(){
         if(game.currentPlayer.hasNext()){
             game.currentPlayer.next()
         }else{
             game.currentPlayer = game.playerList.iterator()
         }
+        onAllRefreshables { refreshAfterNextPlayer() }
     }
+
+    /**
+     * Increases the pass counter
+     */
     fun increasePassCounter(){
         game.passCounter++
     }
+
+    /**
+     * Sets the pass counter on zero
+     */
     fun setPassCounterToZero(){
         game.passCounter = 0
     }
@@ -41,7 +64,7 @@ class GameService() : RefreshingService() {
     fun handoutCards():LinkedList<Card>{
         val handCards = LinkedList<Card>()
         var i = 0
-        for(card in game.cardArr){
+        for(card in game.cardList){
             if(i == 2){
                 break
             }
@@ -52,10 +75,18 @@ class GameService() : RefreshingService() {
         }
         return handCards
     }
+
+    /**
+     * Shuffles the card list
+     */
     private fun shuffleCards(){
-        game.cardArr.shuffle()
+        game.cardList.shuffle()
     }
-    private fun createDeck():LinkedList<Card>{
+
+    /**
+     * Creates the deck of cards
+     */
+    private fun createDeck():MutableList<Card>{
         val deck = LinkedList<Card>()
         for(color in CardSuit.values()){
             for(value in CardValue.values()){
@@ -64,6 +95,10 @@ class GameService() : RefreshingService() {
         }
         return deck
     }
+
+    /**
+     * Shows the results of each player's points
+     */
     private fun showResult(){
         for(player in game.playerList){
             player.calculatePoints()
