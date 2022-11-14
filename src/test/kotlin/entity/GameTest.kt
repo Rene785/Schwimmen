@@ -45,12 +45,12 @@ class GameTest {
     private var kingOfClubs = Card(CardSuit.CLUBS,CardValue.KING,CardState.DRAW_STACK)
     private var aceOfClubs = Card(CardSuit.CLUBS,CardValue.ACE,CardState.DRAW_STACK)
     //Initialize deck
-    private val deck = arrayOf(sevenOfHearts,eightOfHearts,nineOfHearts,tenOfHearts,jackOfHearts,queenOfHearts,kingOfHearts,aceOfHearts,
+    private val deck = mutableListOf(sevenOfHearts,eightOfHearts,nineOfHearts,tenOfHearts,jackOfHearts,queenOfHearts,kingOfHearts,aceOfHearts,
         sevenOfDiamonds,eightOfDiamonds,nineOfDiamonds,tenOfDiamonds,jackOfDiamonds,queenOfDiamonds,kingOfDiamonds,aceOfDiamonds,
         sevenOfSpades,eightOfSpades,nineOfSpades,tenOfSpades,jackOfSpades,queenOfSpades,kingOfSpades,aceOfSpades,
         sevenOfClubs,eightOfClubs,nineOfClubs,tenOfClubs,jackOfClubs,queenOfClubs,kingOfClubs,aceOfClubs)
     //Initialize players
-    private val player1 = Player("Peter",arrayOf(deck[0],deck[1],deck[2]))
+    private val player1 = Player("Peter",mutableListOf(deck[0],deck[1],deck[2]))
     //Initialize game
     private val game = Game(deck)
 
