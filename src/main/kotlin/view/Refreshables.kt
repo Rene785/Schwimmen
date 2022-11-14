@@ -6,6 +6,7 @@ interface Refreshables {
     fun refreshScore()
     fun refreshAfterKnocking()
     fun refreshAfterPass()
+    fun refreshAfterStart()
     fun refreshCreatePlayer()
     fun refreshAfterNextPlayer()
 }

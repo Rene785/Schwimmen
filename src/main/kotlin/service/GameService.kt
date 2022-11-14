@@ -12,7 +12,9 @@ class GameService() : RefreshingService() {
         createDeck()
         shuffleCards()
         for(player in game.playerList) handoutCards()
-        //onAllRefreshables(refreshAfterStart())
+        onAllRefreshables{
+            refreshAfterStart()
+        }
     }
 
     fun endGame(){
@@ -66,6 +68,8 @@ class GameService() : RefreshingService() {
         for(player in game.playerList){
             player.calculatePoints()
         }
-        //onAllRefreshables(refreshScore())
+        onAllRefreshables {
+            refreshScore()
+        }
     }
 }

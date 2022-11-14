@@ -15,7 +15,9 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
             }
         }
         gs.game.playerList.add(Player(name,gs.handoutCards() as Array<Card>))
-        //onAllRefreshables(refreshCreatePlayer())
+        onAllRefreshables{
+            refreshCreatePlayer()
+        }
     }
     fun hasKnocked(player:Player):Boolean{
         return player.hasKnocked
@@ -34,8 +36,10 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
         player.handArr[2] = middleCards[2]
         gs.nextPlayer()
         gs.game.passCounter = 0
-        //onAllRefreshables(refreshHandCards())
-        //onAllRefreshables(refreshMiddleCards())
+        onAllRefreshables{
+            refreshHandCards()
+            refreshMiddleCards()
+        }
     }
     fun exchangeOneCard(handCard: Card,tableCard: Card,player: Player){
         var i=0
@@ -52,8 +56,10 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
             }
         }
         gs.nextPlayer()
-        //onAllRefreshables(refreshMiddleCards())
-        //onAllRefreshables(refreshHandCards())
+        onAllRefreshables{
+            refreshHandCards()
+            refreshMiddleCards()
+        }
     }
     fun pass(){
         gs.increasePassCounter()
@@ -78,10 +84,14 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
             }
         }
         gs.nextPlayer()
-        //onAllRefreshables(refreshAfterPass())
+        onAllRefreshables {
+            refreshAfterPass()
+        }
     }
     fun knock(player: Player){
         player.hasKnocked = true
-        //onAllRefreshables(refreshAfterKnocking())
+        onAllRefreshables {
+            refreshAfterKnocking()
+        }
     }
 }
