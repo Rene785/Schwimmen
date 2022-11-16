@@ -89,7 +89,7 @@ class GameService() : RefreshingService() {
     private fun createDeck():MutableList<Card>{
         val deck = LinkedList<Card>()
         for(color in CardSuit.values()){
-            for(value in CardValue.values()){
+            for(value in CardValue.shortDeck()){
                 deck.add(Card(color,value,CardState.DRAW_STACK))
             }
         }

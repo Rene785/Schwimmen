@@ -6,12 +6,12 @@ package entity
  * @param name Name of the player
  * @param handCardList Mutable list of all three hand cards of the player.
  */
-data class Player(var name:String, var handCardList: MutableList<Card>){
+data class Player(var name:String, var handCardList: MutableList<Card>? = null){
     var hasKnocked = false
     var points = 0
 
     fun calculatePoints(){
-        for(card in handCardList) {
+        for(card in handCardList!!) {
             points += Integer.parseInt(card.value.toString())
         }
     }
