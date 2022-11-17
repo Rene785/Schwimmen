@@ -44,17 +44,11 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
      * @param player The player who changes his cards
      */
     fun exchangeAllCards(player:Player) {
-        val middleCards: LinkedList<Card> = LinkedList()
-        for (card in gs.game.cardList) {
-            if (card.state == CardState.MIDDLE) {
-                middleCards.add(card)
-            }
-        }
         for(card in player.handCardList!!) card.state = CardState.MIDDLE
-        for(card in middleCards) card.state = CardState.ON_PLAYER_HAND
-        player.handCardList!![0] = middleCards[0]
-        player.handCardList!![1] = middleCards[1]
-        player.handCardList!![2] = middleCards[2]
+        for(card in gs.middleCards!!) card.state = CardState.ON_PLAYER_HAND
+        player.handCardList!![0] = gs.middleCards[0]
+        player.handCardList!![1] = gs.middleCards[1]
+        player.handCardList!![2] = gs.middleCards[2]
         gs.nextPlayer()
         gs.game.passCounter = 0
         onAllRefreshables{
@@ -100,12 +94,12 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
         if(gs.game.passCounter == gs.game.playerList.size){
             gs.setPassCounterToZero()
             var count = 0
-            for(i in gs.game.cardList.indices){
-                if(gs.game.cardList[i].state == CardState.MIDDLE){
-                    gs.game.cardList[i].state = CardState.OUT_OF_GAME
+            for(i in gs.game.deck.indices){
+                if(gs.game.deck[i].state == CardState.MIDDLE){
+                    gs.game.deck[i].state = CardState.OUT_OF_GAME
                 }
             }
-            for(card in gs.game.cardList){
+            for(card in gs.game.deck){
                 if(count == 2) break
                 if(card.state == CardState.DRAW_STACK){
                     card.state = CardState.MIDDLE

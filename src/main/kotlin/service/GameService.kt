@@ -8,10 +8,10 @@ import java.util.LinkedList
  * considering the flow of the game.
  */
 class GameService : RefreshingService() {
-
-
     val game = Game(createDeck())
     val playerService = PlayerService(this)
+
+    val middleCards = handoutCards()
 
     /**
      * Starts the game
@@ -61,26 +61,54 @@ class GameService : RefreshingService() {
     /**
      * Returns the first three cards of the draw Stack
      */
-    fun handoutCards():LinkedList<Card>{
+    fun handoutCards():LinkedList<Card>?{
         val handCards = LinkedList<Card>()
         var i = 0
-        for(card in game.cardList){
+        for(card in game.deck){
             if(card.state == CardState.DRAW_STACK){
                 handCards.add(card)
+                card.state = CardState.ON_PLAYER_HAND
                 i++
             }
             if(i == 3){
                 break
             }
         }
+        if(i<3){
+            return null
+        }
         return handCards
+    }
+
+    /**
+     * Sets the middle cards. Like handoutCards() draws the first three cards from the
+     * draw stack.
+     */
+    fun setMiddleCards():LinkedList<Card>? {
+        val middle = LinkedList<Card>()
+        var i = 0
+        for(card in game.deck){
+            if(card.state == CardState.DRAW_STACK){
+                middle.add(card)
+                card.state = CardState.MIDDLE
+                i++
+            }
+            if(i == 3){
+                break
+            }
+        }
+        //If there are not enough cards on the draw stack
+        if(i<3){
+            return null
+        }
+        return middle
     }
 
     /**
      * Shuffles the card list
      */
     private fun shuffleCards(){
-        game.cardList.shuffle()
+        game.deck.shuffle()
     }
 
     /**

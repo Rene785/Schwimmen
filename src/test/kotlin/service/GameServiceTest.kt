@@ -80,6 +80,6 @@ class GameServiceTest {
     fun testBeginGame(){
         gameService.beginGame()
         assertNull(gameService.game.playerList[0].handCardList)
-
+        assertNotEquals(deck[0],gameService.game.deck[0])
     }
 }
