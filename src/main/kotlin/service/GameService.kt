@@ -65,12 +65,12 @@ class GameService : RefreshingService() {
         val handCards = LinkedList<Card>()
         var i = 0
         for(card in game.cardList){
-            if(i == 2){
-                break
-            }
             if(card.state == CardState.DRAW_STACK){
                 handCards.add(card)
                 i++
+            }
+            if(i == 3){
+                break
             }
         }
         return handCards

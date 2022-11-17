@@ -2,10 +2,9 @@ package service
 
 import entity.Player
 import org.junit.jupiter.api.Test
-import kotlin.test.BeforeTest
+import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
-import kotlin.test.assertNull
 
 /**
  * Test cases for [PlayerService]
@@ -18,18 +17,21 @@ class PlayerServiceTest {
     private val player1 = Player("Sabine")
     private val player2 = Player("Thomas")
 
+    /**
+     * Tests whether a player is created and added correctly
+     */
     @Test
     fun testCreatePlayer(){
-        assertNull(gameService.game.playerList)
+        assertEquals(LinkedList(), gameService.game.playerList)
         playerService.createPlayer("Christian")
         assertNotNull(gameService.game.playerList)
     }
 
-    @BeforeTest
-    fun addPlayers(){
-        gameService.game.playerList.add(player1)
-        gameService.game.playerList.add(player2)
-    }
+
+
+    /**
+     * Tests if the functionality of a player knocking is implemented correctly
+     */
     @Test
     fun testHasKnocked(){
         for(player in gameService.game.playerList){
