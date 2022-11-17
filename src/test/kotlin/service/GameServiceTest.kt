@@ -68,9 +68,8 @@ class GameServiceTest {
     fun testHandOutCards(){
         assertNull(gameService.game.playerList[0].handCardList)
         gameService.game.playerList[0].handCardList = gameService.handoutCards()
-        assertEquals(deck[0],gameService.game.playerList[0].handCardList!![0])
-        assertEquals(deck[1],gameService.game.playerList[0].handCardList!![1])
-        assertEquals(deck[2],gameService.game.playerList[0].handCardList!![2])
+        assertEquals(deck[3].value,gameService.game.playerList[0].handCardList!![0].value)
+        assertEquals(deck[3].color,gameService.game.playerList[0].handCardList!![0].color)
     }
 
     /**
@@ -79,7 +78,7 @@ class GameServiceTest {
     @Test
     fun testBeginGame(){
         gameService.beginGame()
-        assertNull(gameService.game.playerList[0].handCardList)
+        assertNotNull(gameService.game.playerList[0].handCardList)
         assertNotEquals(deck[0],gameService.game.deck[0])
     }
 }

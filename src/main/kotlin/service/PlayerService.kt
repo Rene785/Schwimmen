@@ -64,20 +64,22 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
      * @param player The player who is changing his cards
      */
     fun exchangeOneCard(handCard: Card,tableCard: Card,player: Player){
-        var i=0
-        var reached = false
-        for(card in player.handCardList!!){
-            if(reached) break
-            else if(card == handCard){
-                player.handCardList!![i].state = CardState.MIDDLE
-                tableCard.state = CardState.ON_PLAYER_HAND
-                player.handCardList!![i] = tableCard
-                reached = true
-            }else{
-                i++
+        val middleExists = gs.middleCards!!.contains(tableCard)
+        val handExists = player.handCardList!!.contains(handCard)
+        if(middleExists && handExists){
+            handCard.state = CardState.MIDDLE
+            tableCard.state = CardState.ON_PLAYER_HAND
+            for(i in 0..2){
+                if(handCard.color == player.handCardList!![i].color && handCard.value == player.handCardList!![i].value){
+                    player.handCardList!!.removeAt(i)
+                    player.handCardList!!.add(i, tableCard)
+                }
+                if(tableCard.color == gs.middleCards[i].color && tableCard.value == gs.middleCards[i].value){
+                    gs.middleCards.removeAt(i)
+                    gs.middleCards.add(i,handCard)
+                }
             }
         }
-        gs.nextPlayer()
         onAllRefreshables{
             refreshHandCards()
             refreshMiddleCards()

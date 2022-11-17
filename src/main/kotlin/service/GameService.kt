@@ -18,7 +18,7 @@ class GameService : RefreshingService() {
      */
     fun beginGame(){
         shuffleCards()
-        for(player in game.playerList) handoutCards()
+        for(player in game.playerList) player.handCardList = handoutCards()
         onAllRefreshables{
             refreshAfterStart()
         }

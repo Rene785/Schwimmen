@@ -77,11 +77,12 @@ class PlayerServiceTest {
 
     @Test
     fun testExchangeOneCard(){
-        player2.handCardList = LinkedList<Card>()
-        player2.handCardList!!.addAll(listOf(tenOfSpades,nineOfSpades,eightOfSpades))
-        gameService.middleCards!!.addAll(listOf(kingOfSpades,queenOfHearts,jackOfDiamonds))
-        playerService.exchangeOneCard(player2.handCardList!![0],gameService.middleCards!![0],player2)
-        assertEquals(CardState.ON_PLAYER_HAND,kingOfSpades.state)
-        assertEquals(CardState.MIDDLE, tenOfSpades.state)
+        gameService.game.playerList.add(player1)
+        gameService.beginGame()
+        val middleCard = gameService.middleCards!![1]
+        val handCard = gameService.game.playerList[0].handCardList!![1]
+        playerService.exchangeOneCard(handCard,middleCard,player1)
+        assertEquals(CardState.ON_PLAYER_HAND,middleCard.state)
+        assertEquals(CardState.MIDDLE, handCard.state)
     }
 }
