@@ -7,7 +7,7 @@ import java.util.LinkedList
  * Service Class [GameService] provides logic for all functionalities
  * considering the flow of the game.
  */
-class GameService() : RefreshingService() {
+class GameService : RefreshingService() {
 
 
     val game = Game(createDeck())
