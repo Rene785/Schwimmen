@@ -13,7 +13,8 @@ class GameServiceTest {
 
     private val player1 = Player("Peter")
     private val player2 = Player("Christiane")
-    private val playerList = mutableListOf(player1,player2)
+    private val playerList = LinkedList<Player>()
+
 
     private val gameService = GameService()
 
@@ -28,16 +29,13 @@ class GameServiceTest {
             }
         }
     }
-
     /**
-     * Adds players to the player list
+     * Adds player to the player list
      */
     @BeforeTest
-    fun addPlayersToList(){
-        gameService.game.playerList.add(playerList[0])
-        gameService.game.playerList.add(playerList[1])
+    fun addPlayers(){
+        playerList.addAll(listOf(player1,player2))
     }
-
     /**
      * Tests whether the pass counter is increased when the method is called
      */
@@ -73,12 +71,33 @@ class GameServiceTest {
     }
 
     /**
+     * Tests whether the cards in the middle are set correctly
+     */
+    @Test
+    fun testSetMiddleCards(){
+        val oldMiddleCards = gameService.middleCards
+        gameService.middleCards = gameService.setMiddleCards()
+        assertNotEquals(gameService.middleCards, oldMiddleCards)
+        assertEquals(deck[3].value, gameService.middleCards!![0].value)
+        assertEquals(deck[3].color, gameService.middleCards!![0].color)
+    }
+    /**
      * Tests whether a game is beginning correctly
      */
     @Test
     fun testBeginGame(){
-        gameService.beginGame()
+        gameService.beginGame(playerList)
         assertNotNull(gameService.game.playerList[0].handCardList)
         assertNotEquals(deck[0],gameService.game.deck[0])
+    }
+
+    /**
+     * Tests the functionality of ending a game
+     */
+    @Test
+    fun testEndGame(){
+        gameService.beginGame(playerList)
+        gameService.endGame()
+        assertEquals(0,gameService.game.passCounter)
     }
 }

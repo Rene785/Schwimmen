@@ -3,6 +3,7 @@ package service
 import entity.*
 import org.junit.jupiter.api.Test
 import java.util.*
+import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
@@ -16,6 +17,7 @@ class PlayerServiceTest {
 
     private val player1 = Player("Sabine")
     private val player2 = Player("Thomas")
+    private val playerList = LinkedList<Player>()
 
     private val aceOfClubs = Card(CardSuit.CLUBS, CardValue.ACE, CardState.ON_PLAYER_HAND)
     private val jackOfHearts = Card(CardSuit.HEARTS, CardValue.JACK, CardState.ON_PLAYER_HAND)
@@ -30,6 +32,14 @@ class PlayerServiceTest {
     private val nineOfSpades = Card(CardSuit.SPADES,CardValue.NINE,CardState.ON_PLAYER_HAND)
     private val eightOfSpades = Card(CardSuit.SPADES,CardValue.EIGHT,CardState.ON_PLAYER_HAND)
     private val tenOfSpades = Card(CardSuit.SPADES,CardValue.TEN,CardState.ON_PLAYER_HAND)
+
+    /**
+     * Adds player to player list
+     */
+    @BeforeTest
+    fun addPlayers(){
+        playerList.addAll(listOf(player1,player2))
+    }
     /**
      * Tests whether a player is created and added correctly
      */
@@ -78,7 +88,7 @@ class PlayerServiceTest {
     @Test
     fun testExchangeOneCard(){
         gameService.game.playerList.add(player1)
-        gameService.beginGame()
+        gameService.beginGame(playerList)
         val middleCard = gameService.middleCards!![1]
         val handCard = gameService.game.playerList[0].handCardList!![1]
         playerService.exchangeOneCard(handCard,middleCard,player1)

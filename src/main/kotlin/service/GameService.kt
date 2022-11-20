@@ -11,14 +11,15 @@ class GameService : RefreshingService() {
     val game = Game(createDeck())
     val playerService = PlayerService(this)
 
-    val middleCards = handoutCards()
+    var middleCards = setMiddleCards()
 
     /**
      * Starts the game
      */
-    fun beginGame(){
+    fun beginGame(playerList: LinkedList<Player>){
         shuffleCards()
-        for(player in game.playerList) player.handCardList = handoutCards()
+        game.playerList = playerList
+        for(player in playerList) player.handCardList = handoutCards()
         onAllRefreshables{
             refreshAfterStart()
         }

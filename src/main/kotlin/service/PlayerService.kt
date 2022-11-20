@@ -46,9 +46,9 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
     fun exchangeAllCards(player:Player) {
         for(card in player.handCardList!!) card.state = CardState.MIDDLE
         for(card in gs.middleCards!!) card.state = CardState.ON_PLAYER_HAND
-        player.handCardList!![0] = gs.middleCards[0]
-        player.handCardList!![1] = gs.middleCards[1]
-        player.handCardList!![2] = gs.middleCards[2]
+        player.handCardList!![0] = gs.middleCards!![0]
+        player.handCardList!![1] = gs.middleCards!![1]
+        player.handCardList!![2] = gs.middleCards!![2]
         gs.nextPlayer()
         gs.game.passCounter = 0
         onAllRefreshables{
@@ -74,9 +74,9 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
                     player.handCardList!!.removeAt(i)
                     player.handCardList!!.add(i, tableCard)
                 }
-                if(tableCard.color == gs.middleCards[i].color && tableCard.value == gs.middleCards[i].value){
-                    gs.middleCards.removeAt(i)
-                    gs.middleCards.add(i,handCard)
+                if(tableCard.color == gs.middleCards!![i].color && tableCard.value == gs.middleCards!![i].value){
+                    gs.middleCards!!.removeAt(i)
+                    gs.middleCards!!.add(i,handCard)
                 }
             }
         }
