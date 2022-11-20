@@ -9,10 +9,10 @@ package entity
 data class Player(var name:String, var handCardList: MutableList<Card>? = null){
     var hasKnocked = false
     var points = 0
-
+    //TODO Methode hängt noch nicht von Farben ab und hat irgendwie mit String ein Problem
     fun calculatePoints(){
         for(card in handCardList!!) {
-            points += Integer.parseInt(card.value.toString())
+            points += Integer.parseInt(card.value.toString().lowercase())
         }
     }
 }

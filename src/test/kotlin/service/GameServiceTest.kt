@@ -64,10 +64,11 @@ class GameServiceTest {
      */
     @Test
     fun testHandOutCards(){
-        assertNull(gameService.game.playerList[0].handCardList)
+        gameService.beginGame(playerList)
+        assertNotNull(gameService.game.playerList[0].handCardList)
+        val playerCard = gameService.game.playerList[0].handCardList!![0]
         gameService.game.playerList[0].handCardList = gameService.handoutCards()
-        assertEquals(deck[3].value,gameService.game.playerList[0].handCardList!![0].value)
-        assertEquals(deck[3].color,gameService.game.playerList[0].handCardList!![0].color)
+        assertNotEquals(playerCard,gameService.game.playerList[0].handCardList!![0])
     }
 
     /**
