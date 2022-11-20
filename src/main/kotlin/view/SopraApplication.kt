@@ -6,10 +6,10 @@ class SopraApplication : BoardGameApplication("SoPra Game") {
 
     private val helloScene = HelloScene()
     private val startScene = StartScene()
+    private val gameScene = GameScene()
 
     init {
-        this.showGameScene(helloScene)
-        this.showMenuScene(startScene)
+        this.showGameScene(gameScene)
     }
 
 }

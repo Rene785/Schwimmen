@@ -25,7 +25,6 @@ class StartScene: MenuScene() {
     )
 
     init{
-        background = ColorVisual(255,0,0)
         addComponents(startButton,endButton)
     }
 }
