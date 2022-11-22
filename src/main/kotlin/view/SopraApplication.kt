@@ -9,17 +9,32 @@ class SopraApplication : Refreshables,BoardGameApplication("SoPra Game") {
     private val startScene = StartScene()
     private val gameScene = GameScene()
     private val afterMoveScene = AfterMoveScene()
+    private val endScene = EndScene()
 
    // private val middleToken1 = TokenView()
     //private val middleImages = listOf()
 
     init {
         registerMenuEvents()
-        this.showGameScene(gameScene)
-        this.showMenuScene(afterMoveScene)
+        setScene(0)
     }
 
-    private fun registerMenuEvents() {}
+    private fun setScene(x:Int){
+        if(x == 0){ // Start Scene
+            showGameScene(gameScene)
+            showMenuScene(startScene)
+        }else if(x == 1){ // Game Scene
+            hideMenuScene()
+        }else if(x == 2) { //After Move Scene
+            showMenuScene(afterMoveScene)
+        }else if(x == 3){ //End Scene
+            showMenuScene(endScene)
+        }
+    }
+
+    private fun registerMenuEvents() {
+
+    }
     override fun refreshHandCards() {
         TODO("Not yet implemented")
     }

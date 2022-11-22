@@ -25,14 +25,6 @@ class PlayerServiceTest {
     private val kingOfDiamonds = Card(CardSuit.DIAMONDS, CardValue.KING, CardState.MIDDLE)
     private val sevenOfDiamonds = Card(CardSuit.DIAMONDS, CardValue.SEVEN, CardState.MIDDLE)
     private val eightOfHearts = Card(CardSuit.HEARTS, CardValue.EIGHT, CardState.MIDDLE)
-
-    private val kingOfSpades = Card(CardSuit.SPADES,CardValue.KING,CardState.MIDDLE)
-    private val queenOfHearts = Card(CardSuit.HEARTS,CardValue.QUEEN,CardState.MIDDLE)
-    private val jackOfDiamonds = Card(CardSuit.DIAMONDS,CardValue.JACK,CardState.MIDDLE)
-    private val nineOfSpades = Card(CardSuit.SPADES,CardValue.NINE,CardState.ON_PLAYER_HAND)
-    private val eightOfSpades = Card(CardSuit.SPADES,CardValue.EIGHT,CardState.ON_PLAYER_HAND)
-    private val tenOfSpades = Card(CardSuit.SPADES,CardValue.TEN,CardState.ON_PLAYER_HAND)
-
     /**
      * Adds player to player list
      */
@@ -85,6 +77,9 @@ class PlayerServiceTest {
         assertEquals(CardState.ON_PLAYER_HAND, eightOfHearts.state)
     }
 
+    /**
+     * Tests if one card is changed correctly
+     */
     @Test
     fun testExchangeOneCard(){
         gameService.game.playerList.add(player1)
