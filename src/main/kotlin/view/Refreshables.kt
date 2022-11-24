@@ -7,40 +7,40 @@ interface Refreshables {
     /**
      * Refreshes the Hand cards.
      */
-    fun refreshHandCards()
+    fun refreshHandCards(){}
 
     /**
      * Refreshes the middle cards.
      */
-    fun refreshMiddleCards()
+    fun refreshMiddleCards(){}
 
     /**
      * Refreshes the score.
      */
-    fun refreshScore()
+    fun refreshScore(){}
 
     /**
      * Refreshes the ui after a player has knocked
      */
-    fun refreshAfterKnocking()
+    fun refreshAfterKnocking(){}
 
     /**
      * Refreshes the screen after a player has passed
      */
-    fun refreshAfterPass()
+    fun refreshAfterPass(){}
 
     /**
      * Refreshes the screen after the game has been started
      */
-    fun refreshAfterStart()
+    fun refreshAfterStart(){}
 
     /**
      * Refreshes the screen after a player has been created.
      */
-    fun refreshCreatePlayer()
+    fun refreshCreatePlayer(){}
 
     /**
      * Updates the screen after a player has finished his turn.
      */
-    fun refreshAfterNextPlayer()
+    fun refreshAfterNextPlayer(){}
 }

@@ -5,7 +5,7 @@ import tools.aqua.bgw.components.uicomponents.Label
 import tools.aqua.bgw.core.MenuScene
 import tools.aqua.bgw.util.Font
 
-class AfterMoveScene : MenuScene() {
+class AfterMoveScene : MenuScene(),Refreshables {
     private val startTurnButton = Button(
         posX = 710,
         posY = 600,

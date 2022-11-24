@@ -8,7 +8,7 @@ import tools.aqua.bgw.core.Alignment
 import tools.aqua.bgw.core.BoardGameScene
 import tools.aqua.bgw.visual.ColorVisual
 
-class GameScene: BoardGameScene(background = ColorVisual(53,101,77)) {
+class GameScene: BoardGameScene(width = 1920, height = 1080,background = ColorVisual(108, 168, 59)),Refreshables {
 
     private val drawStack: CardStack<CardView> = CardStack(
         height = 200,
@@ -81,5 +81,29 @@ class GameScene: BoardGameScene(background = ColorVisual(53,101,77)) {
             upPlayerCards,
             rightPlayerCards
         )
+    }
+
+    override fun refreshAfterNextPlayer() {
+        TODO("Not yet implemented")
+    }
+
+    override fun refreshAfterPass() {
+        TODO("Not yet implemented")
+    }
+
+    override fun refreshHandCards() {
+        TODO("Not yet implemented")
+    }
+
+    override fun refreshMiddleCards() {
+        TODO("Not yet implemented")
+    }
+
+    override fun refreshAfterKnocking() {
+        TODO("Not yet implemented")
+    }
+
+    override fun refreshCreatePlayer() {
+        TODO("Not yet implemented")
     }
 }

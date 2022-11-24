@@ -8,7 +8,7 @@ import java.util.LinkedList
  * considering the flow of the game.
  */
 class GameService : RefreshingService() {
-    val game = Game(createDeck())
+    var game = Game(createDeck())
     val playerService = PlayerService(this)
 
     var middleCards = setMiddleCards()
@@ -17,8 +17,9 @@ class GameService : RefreshingService() {
      * Starts the game
      */
     fun beginGame(playerList: LinkedList<Player>){
-        shuffleCards()
+        game = Game(createDeck())
         game.playerList = playerList
+        shuffleCards()
         for(player in playerList) player.handCardList = handoutCards()
         onAllRefreshables{
             refreshAfterStart()
