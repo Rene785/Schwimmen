@@ -9,7 +9,11 @@ class SwimmingApplication() : Refreshables,BoardGameApplication("SoPra Game") {
     private val startScene = StartScene(gameService)
     private val gameScene = GameScene(gameService)
     private val afterMoveScene = AfterMoveScene(gameService)
-    private val endScene = EndScene(gameService)
+    private val endScene = EndScene(gameService).apply {
+        newGameButton.onMouseClicked = {
+            showMenuScene(startScene)
+        }
+    }
 
     init {
         gameService.addRefreshable(this)
@@ -18,8 +22,9 @@ class SwimmingApplication() : Refreshables,BoardGameApplication("SoPra Game") {
         gameService.playerService.addRefreshable(this)
         gameService.playerService.addRefreshable(startScene)
         gameService.playerService.addRefreshable(gameScene)
+
         this.showGameScene(gameScene)
-        this.showMenuScene(startScene)
+        this.showMenuScene(endScene)
     }
 
     override fun refreshScore() {

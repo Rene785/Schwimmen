@@ -3,8 +3,6 @@ package service
 import entity.Card
 import entity.CardState
 import entity.Player
-import java.util.*
-
 /**
  * Service class [PlayerService] provides logic for all functionalities
  * considering the player.
@@ -18,12 +16,6 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
      */
     //TODO Randfälle implementieren für zwei Spieler und wenn über 4 Spieler geht.
     fun createPlayer(name:String){
-        for(player in gs.game.playerList) {
-            if (player.name.equals("Spieler 1") || player.name.equals("Spieler 2")){
-                player.name = name
-                return
-            }
-        }
         gs.game.playerList.add(Player(name,gs.handoutCards()))
         onAllRefreshables{
             refreshCreatePlayer()

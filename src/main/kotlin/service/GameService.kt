@@ -43,7 +43,7 @@ class GameService : RefreshingService() {
     fun nextPlayer(){
         game.currentPlayerIndex++
         if(game.currentPlayerIndex >= game.playerList.size) game.currentPlayerIndex = 0
-        if(game.currentPlayer().hasKnocked) {
+        if(playerService.hasKnocked(game.currentPlayer())) {
             endGame()
             return
         }
@@ -108,13 +108,6 @@ class GameService : RefreshingService() {
             return null
         }
         return middle
-    }
-
-    /**
-     * Shuffles the card list
-     */
-    private fun shuffleCards(){
-        game.deck.shuffle()
     }
 
     /**
