@@ -43,4 +43,8 @@ interface Refreshables {
      * Updates the screen after a player has finished his turn.
      */
     fun refreshAfterNextPlayer(){}
+    /**
+     * Updates after the next player is at the table playing
+     */
+    fun refreshAfterNextPlayerScene(){}
 }

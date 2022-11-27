@@ -5,9 +5,9 @@ import java.util.LinkedList
 /**
  * Entity class [Game] saves the current player, the pass counter, a list of the players and a card Array where all cards are saved in.
  * @constructor [Game] initializes the [deck].
- * @param deck A Mutable List of all cards in the Deck.
  */
-data class Game(var deck:MutableList<Card>){
+class Game(var deck:LinkedList<Card>){
+
     /**
      * List of all players
      */
@@ -17,8 +17,30 @@ data class Game(var deck:MutableList<Card>){
      */
     var passCounter = 0
     /**
-     * Iterator to iterate over the player list to determine the current player
+     * Integer to iterate over the player list to determine the current player
      */
-    var currentPlayer = playerList.iterator()
+    var currentPlayerIndex = 0
+
+    /**
+     * Integer to save the remaining amount of cards in the deck
+     */
+    var deckSize = deck.size
+
+    /**
+     * Method to calculate all remaining cards in the deck
+     */
+    fun calculateDeckSize(){
+        for(card in deck){
+            if(card.state == CardState.DRAW_STACK) deckSize++
+        }
+    }
+
+    /**
+     * Method to get the current player
+     */
+    fun currentPlayer():Player{
+        if(currentPlayerIndex >= playerList.size) currentPlayerIndex = 0
+        return playerList[currentPlayerIndex]
+    }
 }
 

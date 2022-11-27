@@ -11,16 +11,16 @@ class GameService : RefreshingService() {
     var game = Game(createDeck())
     val playerService = PlayerService(this)
 
-    var middleCards = setMiddleCards()
+    var middleCards = LinkedList<Card>()
 
     /**
      * Starts the game
      */
     fun beginGame(playerList: LinkedList<Player>){
-        game = Game(createDeck())
         game.playerList = playerList
-        shuffleCards()
+        game.deck.shuffle()
         for(player in playerList) player.handCardList = handoutCards()
+        middleCards = setMiddleCards()!!
         onAllRefreshables{
             refreshAfterStart()
         }
@@ -32,16 +32,20 @@ class GameService : RefreshingService() {
     fun endGame(){
         setPassCounterToZero()
         showResult()
+        onAllRefreshables {
+            refreshScore()
+        }
     }
 
     /**
      * Selects the next player in the player list
      */
     fun nextPlayer(){
-        if(game.currentPlayer.hasNext()){
-            game.currentPlayer.next()
-        }else{
-            game.currentPlayer = game.playerList.iterator()
+        game.currentPlayerIndex++
+        if(game.currentPlayerIndex >= game.playerList.size) game.currentPlayerIndex = 0
+        if(game.currentPlayer().hasKnocked) {
+            endGame()
+            return
         }
         onAllRefreshables { refreshAfterNextPlayer() }
     }
@@ -116,7 +120,7 @@ class GameService : RefreshingService() {
     /**
      * Creates the deck of cards
      */
-    private fun createDeck():MutableList<Card>{
+    private fun createDeck():LinkedList<Card>{
         val deck = LinkedList<Card>()
         for(color in CardSuit.values()){
             for(value in CardValue.shortDeck()){
@@ -136,5 +140,8 @@ class GameService : RefreshingService() {
         onAllRefreshables {
             refreshScore()
         }
+    }
+    fun startNextRound(){
+        onAllRefreshables { refreshAfterNextPlayerScene() }
     }
 }

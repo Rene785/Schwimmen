@@ -1,11 +1,12 @@
 package view
 
+import service.GameService
 import tools.aqua.bgw.components.uicomponents.Button
 import tools.aqua.bgw.components.uicomponents.Label
 import tools.aqua.bgw.core.MenuScene
 import tools.aqua.bgw.util.Font
 
-class AfterMoveScene : MenuScene(),Refreshables {
+class AfterMoveScene(private val gameService: GameService) : MenuScene(),Refreshables {
     private val startTurnButton = Button(
         posX = 710,
         posY = 600,
@@ -13,7 +14,11 @@ class AfterMoveScene : MenuScene(),Refreshables {
         height = 150,
         text = "START TURN",
         font = Font(size = 40, fontWeight = Font.FontWeight.SEMI_BOLD)
-    )
+    ).apply {
+        onMouseClicked = {
+            gameService.startNextRound()
+        }
+    }
 
     private val waitLabel = Label(
         posX = 325,

@@ -1,6 +1,7 @@
 package view
 
+import service.GameService
 import tools.aqua.bgw.core.MenuScene
 
-class EndScene: MenuScene(),Refreshables {
+class EndScene(private val gameService: GameService): MenuScene(),Refreshables {
 }
