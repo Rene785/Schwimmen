@@ -16,6 +16,14 @@ import java.awt.Color
 import java.util.*
 import javax.imageio.ImageIO
 
+/**
+ * A [BoardGameScene], which shows the Game Scene.
+ *
+ * Shows middle cards, hand cards, player labels, the deck, and a pass counter
+ * Handles every Event.
+ *
+ * @param gameService The [GameService] of the game
+ */
 class GameScene(private val gameService:GameService): BoardGameScene(width = 1920, height = 1080,background = ColorVisual(108, 168, 59)),Refreshables {
 
     private var middleSelect = -1
@@ -305,6 +313,7 @@ class GameScene(private val gameService:GameService): BoardGameScene(width = 192
             frontVisual = ImageVisual(CardImageLoader().frontImageFor(middle[2].color,middle[2].value))
         }
         resetCardPositions()
+        drawStackLabel.text = gameService.game.deck.filter { card -> card.state == CardState.DRAW_STACK }.size.toString()
     }
 
     override fun refreshAfterKnocking() {
@@ -313,13 +322,19 @@ class GameScene(private val gameService:GameService): BoardGameScene(width = 192
         players.forEach{ player -> playerNameList += player.name}
         when(players.size){
             2 -> {
+                currentKnock.isVisible = false
+                rightKnock.isVisible = false
+                leftKnock.isVisible = false
                 topKnock.isVisible = players[playerNameList.indexOf(topPlayerLabel.text)].hasKnocked
             }
             3 -> {
+                currentKnock.isVisible = false
+                topKnock.isVisible = false
                 leftKnock.isVisible = players[playerNameList.indexOf(leftPlayerLabel.text)].hasKnocked
                 rightKnock.isVisible = players[playerNameList.indexOf(rightPlayerLabel.text)].hasKnocked
             }
             4 -> {
+                currentKnock.isVisible = false
                 leftKnock.isVisible = players[playerNameList.indexOf(leftPlayerLabel.text)].hasKnocked
                 topKnock.isVisible = players[playerNameList.indexOf(topPlayerLabel.text)].hasKnocked
                 rightKnock.isVisible = players[playerNameList.indexOf(rightPlayerLabel.text)].hasKnocked
@@ -462,7 +477,7 @@ class GameScene(private val gameService:GameService): BoardGameScene(width = 192
         }
         handSelect = cardNumber
     }
-    private fun resetCardPositions(){
+    private fun resetCardPositions() {
         middleCardOne.posY = 385.0
         middleCardTwo.posY = 385.0
         middleCardThree.posY = 385.0

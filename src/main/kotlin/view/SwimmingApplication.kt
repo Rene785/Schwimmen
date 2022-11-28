@@ -3,6 +3,9 @@ package view
 import service.GameService
 import tools.aqua.bgw.core.BoardGameApplication
 
+/**
+ * A [BoardGameApplication] to manage the different scenes during the game
+ */
 class SwimmingApplication() : Refreshables,BoardGameApplication("SoPra Game") {
 
     private val gameService = GameService()
@@ -37,13 +40,14 @@ class SwimmingApplication() : Refreshables,BoardGameApplication("SoPra Game") {
         gameScene.refreshHandCards()
         gameScene.refreshMiddleCards()
         gameScene.orderNames()
+        gameScene.refreshAfterKnocking()
     }
     override fun refreshAfterNextPlayer() {
         this.showMenuScene(afterMoveScene)
         gameScene.refreshHandCards()
         gameScene.refreshMiddleCards()
-        gameScene.refreshAfterKnocking()
         gameScene.orderNames()
+        gameScene.refreshAfterKnocking()
     }
     override fun refreshAfterNextPlayerScene(){
         this.hideMenuScene()

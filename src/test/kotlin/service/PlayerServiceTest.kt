@@ -63,6 +63,7 @@ class PlayerServiceTest {
      */
     @Test
     fun testExchangeAllCards() {
+        gameService.game.playerList.add(player1)
         player1.handCardList = LinkedList<Card>()
         player1.handCardList!!.add(aceOfClubs)
         player1.handCardList!!.add(jackOfHearts)

@@ -11,6 +11,10 @@ import java.util.*
 data class Player(var name:String, var handCardList: MutableList<Card>? = null){
     var hasKnocked = false
     var points = 0.0
+
+    /**
+     * Calculates the points for the player
+     */
     fun calculatePoints(){
         var heartScore = 0.0
         var spadeScore = 0.0

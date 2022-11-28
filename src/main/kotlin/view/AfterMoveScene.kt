@@ -6,6 +6,10 @@ import tools.aqua.bgw.components.uicomponents.Label
 import tools.aqua.bgw.core.MenuScene
 import tools.aqua.bgw.util.Font
 
+/**
+ * A [MenuScene] for the players to swap so that nobody knows the others hand
+ * @param gameService The [GameService] of the game
+ */
 class AfterMoveScene(private val gameService: GameService) : MenuScene(),Refreshables {
     private val startTurnButton = Button(
         posX = 710,

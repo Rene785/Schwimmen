@@ -10,6 +10,13 @@ import tools.aqua.bgw.visual.ImageVisual
 import java.awt.Color
 import javax.imageio.ImageIO
 
+/**
+ * A [MenuScene], which shows the end result of the game.
+ *
+ * Shows which player ended up where on the ranking.
+ *
+ * @param gameService The [GameService] of the game
+ */
 class EndScene(private val gameService: GameService): MenuScene(1920,1080, background = ColorVisual.LIGHT_GRAY),Refreshables {
 
     private val winnerLabel = Label(

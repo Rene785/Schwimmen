@@ -11,9 +11,14 @@ import tools.aqua.bgw.visual.ColorVisual
 import java.util.*
 import kotlin.system.exitProcess
 
+/**
+ * A [MenuScene] to create Players with names and choose the amount of players.
+ *
+ * Is shown at the start of the game.
+ *
+ * @param gameService The [GameService] of the game
+ */
 class StartScene(private val gameService: GameService): MenuScene(400,1080, background = ColorVisual.LIGHT_GRAY), Refreshables {
-
-    private val playerList = LinkedList<Player>()
 
     private val p1Label = Label(
         width = 100, height = 35,
@@ -131,6 +136,7 @@ class StartScene(private val gameService: GameService): MenuScene(400,1080, back
         visual = ColorVisual(0,255,0,170)
     ).apply {
         onMouseClicked = {
+            val playerList = LinkedList<Player>()
             check(p1Input.text.isNotBlank() || p2Input.text.isNotBlank()){"Not all players have names"}
             check(!p3Input.isDisabled && p3Input.text.isNotBlank() || p3Input.isDisabled){"Player 3 is missing a name"}
             check(!p4Input.isDisabled && p4Input.text.isNotBlank() || p4Input.isDisabled){"Player 4 is missing a name"}
