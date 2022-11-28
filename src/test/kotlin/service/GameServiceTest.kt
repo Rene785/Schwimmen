@@ -77,10 +77,10 @@ class GameServiceTest {
     @Test
     fun testSetMiddleCards(){
         val oldMiddleCards = gameService.middleCards
-        gameService.middleCards = gameService.setMiddleCards()
+        gameService.middleCards = gameService.setMiddleCards()!!
         assertNotEquals(gameService.middleCards, oldMiddleCards)
-        assertEquals(deck[3].value, gameService.middleCards!![0].value)
-        assertEquals(deck[3].color, gameService.middleCards!![0].color)
+        assertEquals(deck[0].value, gameService.middleCards[0].value)
+        assertEquals(deck[0].color, gameService.middleCards[0].color)
     }
     /**
      * Tests whether a game is beginning correctly

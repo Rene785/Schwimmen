@@ -51,7 +51,7 @@ class PlayerServiceTest {
     fun testHasKnocked(){
         for(player in gameService.game.playerList){
             assertEquals(false,playerService.hasKnocked(player))
-            playerService.knock(player)
+            playerService.knock()
         }
         for(player in gameService.game.playerList){
             assertEquals(true,playerService.hasKnocked(player))
@@ -67,8 +67,8 @@ class PlayerServiceTest {
         player1.handCardList!!.add(aceOfClubs)
         player1.handCardList!!.add(jackOfHearts)
         player1.handCardList!!.add(queenOfSpades)
-        gameService.middleCards!!.addAll(listOf(kingOfDiamonds,sevenOfDiamonds,eightOfHearts))
-        playerService.exchangeAllCards(player1)
+        gameService.middleCards.addAll(listOf(kingOfDiamonds,sevenOfDiamonds,eightOfHearts))
+        gameService.playerService.exchangeAllCards(player1)
         assertEquals(CardState.MIDDLE, aceOfClubs.state)
         assertEquals(CardState.MIDDLE, jackOfHearts.state)
         assertEquals(CardState.MIDDLE, queenOfSpades.state)
@@ -84,7 +84,7 @@ class PlayerServiceTest {
     fun testExchangeOneCard(){
         gameService.game.playerList.add(player1)
         gameService.beginGame(playerList)
-        val middleCard = gameService.middleCards!![1]
+        val middleCard = gameService.middleCards[1]
         val handCard = gameService.game.playerList[0].handCardList!![1]
         playerService.exchangeOneCard(handCard,middleCard,player1)
         assertEquals(CardState.ON_PLAYER_HAND,middleCard.state)

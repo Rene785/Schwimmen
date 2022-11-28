@@ -24,7 +24,7 @@ class GameScene(private val gameService:GameService): BoardGameScene(width = 192
     private val passLabel = Label(
         height = 100,
         width = 400,
-        text = "Times until card reset:${gameService.game.passCounter}",
+        text = "Pass Counter:${gameService.game.passCounter}",
         font = Font(size = 30, fontWeight = Font.FontWeight.SEMI_BOLD, color = Color.WHITE)
     )
 
@@ -40,7 +40,7 @@ class GameScene(private val gameService:GameService): BoardGameScene(width = 192
         posY = 560,
         height = 100,
         width = 100,
-        text = gameService.game.deckSize.toString(),
+        text = gameService.game.deck.filter { card -> card.state == CardState.DRAW_STACK }.size.toString(),
         font = Font(size = 22, fontWeight = Font.FontWeight.SEMI_BOLD, color = Color.WHITE)
     )
 
@@ -266,7 +266,7 @@ class GameScene(private val gameService:GameService): BoardGameScene(width = 192
     }
 
     override fun refreshAfterPass() {
-        passLabel.text = "Times until card reset:${gameService.game.passCounter}"
+        passLabel.text = "Pass Counter:${gameService.game.passCounter}"
         refreshMiddleCards()
         refreshHandCards()
         refreshAfterKnocking()

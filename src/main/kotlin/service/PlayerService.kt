@@ -14,7 +14,6 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
      * Creates a player and adds it to the player list.
      * @param name The name with which the player will be initialized
      */
-    //TODO Randfälle implementieren für zwei Spieler und wenn über 4 Spieler geht.
     fun createPlayer(name:String){
         gs.game.playerList.add(Player(name,gs.handoutCards()))
         onAllRefreshables{
@@ -52,7 +51,6 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
         onAllRefreshables{
             refreshHandCards()
             refreshMiddleCards()
-            refreshAfterNextPlayer()
         }
     }
 
@@ -83,7 +81,6 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
         onAllRefreshables{
             refreshHandCards()
             refreshMiddleCards()
-            refreshAfterNextPlayer()
         }
     }
 
@@ -97,19 +94,22 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
         if(gs.game.passCounter == gs.game.playerList.size){
             gs.setPassCounterToZero()
             var count = 0
-            for(i in gs.game.deck.indices){
-                if(gs.game.deck[i].state == CardState.MIDDLE){
-                    gs.game.deck[i].state = CardState.OUT_OF_GAME
+            val oldMiddleCards = gs.game.deck.filter{ card -> card.state == CardState.MIDDLE }
+            oldMiddleCards.forEach { card ->
+                run {
+                    card.state = CardState.OUT_OF_GAME
+                    gs.middleCards.remove(card)
                 }
             }
             for(card in gs.game.deck){
-                if(count == 2) break
+                if(count == 3) break
                 if(card.state == CardState.DRAW_STACK){
                     card.state = CardState.MIDDLE
+                    gs.middleCards.add(card)
                     count++
                 }
             }
-            if(count != 2){
+            if(count != 3){
                 gs.endGame()
                 return
             }
@@ -117,7 +117,6 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
         gs.nextPlayer()
         onAllRefreshables {
             refreshAfterPass()
-            refreshAfterNextPlayer()
         }
     }
 
@@ -126,10 +125,7 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
      */
     fun knock(){
         gs.game.currentPlayer().hasKnocked = true
+        gs.setPassCounterToZero()
         gs.nextPlayer()
-        onAllRefreshables {
-            refreshAfterKnocking()
-            refreshAfterNextPlayer()
-        }
     }
 }

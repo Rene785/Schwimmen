@@ -17,9 +17,11 @@ class GameService : RefreshingService() {
      * Starts the game
      */
     fun beginGame(playerList: LinkedList<Player>){
-        game.playerList = playerList
+        game = Game(createDeck())
         game.deck.shuffle()
-        for(player in playerList) player.handCardList = handoutCards()
+        for(player in game.playerList) game.playerList.remove()
+        game.playerList = playerList
+        for(player in game.playerList) player.handCardList = handoutCards()
         middleCards = setMiddleCards()!!
         onAllRefreshables{
             refreshAfterStart()

@@ -22,13 +22,14 @@ class SwimmingApplication() : Refreshables,BoardGameApplication("SoPra Game") {
         gameService.playerService.addRefreshable(this)
         gameService.playerService.addRefreshable(startScene)
         gameService.playerService.addRefreshable(gameScene)
-
         this.showGameScene(gameScene)
-        this.showMenuScene(endScene)
+        this.showMenuScene(startScene)
     }
 
     override fun refreshScore() {
         this.showMenuScene(endScene)
+        endScene.initScoreConfig()
+        endScene.showScore()
     }
 
     override fun refreshAfterStart() {
