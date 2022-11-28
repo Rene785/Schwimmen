@@ -39,4 +39,12 @@ class CardTest {
         assert(aceOfClubs.equals(Card(CardSuit.CLUBS,CardValue.ACE,CardState.DRAW_STACK)))
     }
 
+    /**
+     * Tests the toString method of Card
+     */
+    @Test
+    fun testToString(){
+        assertEquals("♣10on-player-hand",Card(CardSuit.CLUBS,CardValue.TEN,CardState.ON_PLAYER_HAND).toString())
+    }
+
 }
