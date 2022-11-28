@@ -22,7 +22,7 @@ import javax.imageio.ImageIO
  * Shows middle cards, hand cards, player labels, the deck, and a pass counter
  * Handles every Event.
  *
- * @param gameService The [GameService] of the game
+ * @constructor The [GameService] of the game
  */
 class GameScene(private val gameService:GameService): BoardGameScene(width = 1920, height = 1080,background = ColorVisual(108, 168, 59)),Refreshables {
 

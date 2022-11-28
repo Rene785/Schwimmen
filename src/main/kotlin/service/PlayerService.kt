@@ -47,7 +47,7 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
         gs.middleCards[1] = tmpCard2
         gs.middleCards[2] = tmpCard3
         gs.nextPlayer()
-        gs.game.passCounter = 0
+        gs.setPassCounterToZero()
         onAllRefreshables{
             refreshHandCards()
             refreshMiddleCards()
@@ -77,6 +77,7 @@ class PlayerService(private val gs:GameService) : RefreshingService() {
                 }
             }
         }
+        gs.setPassCounterToZero()
         gs.nextPlayer()
         onAllRefreshables{
             refreshHandCards()

@@ -16,7 +16,7 @@ import kotlin.system.exitProcess
  *
  * Is shown at the start of the game.
  *
- * @param gameService The [GameService] of the game
+ * @constructor The [GameService] of the game
  */
 class StartScene(private val gameService: GameService): MenuScene(400,1080, background = ColorVisual.LIGHT_GRAY), Refreshables {
 

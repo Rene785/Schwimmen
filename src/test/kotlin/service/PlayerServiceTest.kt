@@ -91,4 +91,37 @@ class PlayerServiceTest {
         assertEquals(CardState.ON_PLAYER_HAND,middleCard.state)
         assertEquals(CardState.MIDDLE, handCard.state)
     }
+
+    /**
+     * Tests whether pass is working correctly
+     */
+    @Test
+    fun testPass(){
+        gameService.game.playerList.addAll(listOf(player1,player2))
+        gameService.beginGame(playerList)
+
+        assertEquals(0,gameService.game.passCounter)
+        gameService.playerService.pass()
+        assertEquals(1,gameService.game.passCounter)
+        gameService.playerService.pass()
+        assertEquals(0,gameService.game.passCounter)
+    }
+    /**
+     * Tests whether pass is working correctly
+     */
+    @Test
+    fun testKnock(){
+        gameService.game.playerList.addAll(listOf(player1,player2))
+        gameService.beginGame(playerList)
+
+        gameService.game.passCounter = 1
+        assertEquals(false,player1.hasKnocked)
+        assertEquals(1,gameService.game.passCounter)
+        assertEquals(gameService.game.currentPlayer(),player1)
+
+        gameService.playerService.knock()
+        assertEquals(true,player1.hasKnocked)
+        assertEquals(0,gameService.game.passCounter)
+        assertEquals(gameService.game.currentPlayer(), player2)
+    }
 }

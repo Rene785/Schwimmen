@@ -15,7 +15,7 @@ import javax.imageio.ImageIO
  *
  * Shows which player ended up where on the ranking.
  *
- * @param gameService The [GameService] of the game
+ * @constructor The [GameService] of the game
  */
 class EndScene(private val gameService: GameService): MenuScene(1920,1080, background = ColorVisual.LIGHT_GRAY),Refreshables {
 
